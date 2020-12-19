@@ -515,28 +515,36 @@ android:orientation="vertical"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_addedBy"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginStart="5dp"
                             android:layout_marginBottom="3dp"
                             android:text="Seller Detail"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
+
+                        <Button
+                            android:id="@+id/sell_property"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:background="@color/colorPrimaryDark"
+                            android:clickable="true"
+                            android:text="Contact Agent"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:textAllCaps="false"
+                            android:textColor="#ffff"
+                            />
 
                     </LinearLayout>
 
@@ -545,8 +553,6 @@ android:orientation="vertical"
             </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
 
 
 </ScrollView>
