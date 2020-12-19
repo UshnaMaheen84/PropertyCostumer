@@ -6,10 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import me.relex.circleindicator.CircleIndicator;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -30,6 +33,7 @@ public class PropertyDetail extends AppCompatActivity {
     TextView precinct, road, properyType, plotNo, sqyrds, isConstructed, tv_stories, tv_rooms, sellrDetails, roomsHeading, storyHeading;
     String plot_name, plot_no, road_no, priceRange, sqyrd, constructed, rooms, stories, priceFrom, priceTo, agentNum;
     String key;
+    Button sell_property;
     double lat, lng;
 
     SlidingImage_Adapter adapter;
@@ -195,7 +199,28 @@ public class PropertyDetail extends AppCompatActivity {
             }
         });
 
+        mapImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(PropertyDetail.this, ViewMap.class);
+                Log.e("latlng", lat + " " + lng);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lng", lng);
+                intent.putExtra("name", plot_name);
+                startActivity(intent);
+
+            }
+        });
+
+        sell_property.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + agentNum));
+                startActivity(intent);
+            }
+        });
     }
 
     private void Ui() {
@@ -217,6 +242,7 @@ public class PropertyDetail extends AppCompatActivity {
         sellrDetails = findViewById(R.id.tv_addedBy);
         roomsHeading = findViewById(R.id.room_heading);
         storyHeading = findViewById(R.id.story_heading);
+        sell_property = findViewById(R.id.sell_property);
 
     }
 

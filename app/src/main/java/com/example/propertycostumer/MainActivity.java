@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.toolbar_title);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Typeface typeface= Typeface.createFromAsset(getAssets(),"fonts/Montserrat-Italic.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Italic.ttf");
         textView.setTypeface(typeface);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_keyboard_backspace_24);
 
@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(true);
 
 
-
-
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this) {
         });
@@ -70,10 +68,12 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.show();
         FirebaseRecyclerOptions<Plots> options =
                 new FirebaseRecyclerOptions.Builder<Plots>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Plots"), Plots.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Plots")
+                        .orderByChild("is_sold").equalTo("No")
+                        , Plots.class)
                         .build();
         adapter = new PropertyAdapter(options, this, progressDialog);
-           recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-
-
 
 
 }
