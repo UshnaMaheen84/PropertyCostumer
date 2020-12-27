@@ -23,13 +23,13 @@
             android:required="false" />
 
         <activity android:name=".SignUp" />
-        <activity android:name=".Splash" />
+        <activity android:name=".Login" />
         <activity
             android:name=".ViewMap"
             android:label="@string/title_activity_view_map" />
         <activity android:name=".PropertyDetail" />
         <activity android:name=".VerifyPhoneActivity" />
-        <activity android:name=".Login" />
+        <activity android:name=".Splash" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

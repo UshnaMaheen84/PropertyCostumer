@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Property Costumer</string>
+
     <string name="title_activity_view_map">Map</string>
+
+    <string name="name">Enter Your Name</string>
+    <string name="email">Enter Valid Email</string>
+    <string name="password">Enter min 6 characters</string>
 
 </resources>
