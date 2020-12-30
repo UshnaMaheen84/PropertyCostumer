@@ -3,11 +3,15 @@ package com.example.propertycostumer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 import me.relex.circleindicator.CircleIndicator;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +19,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.propertycostumer.adapter.SlidingImage_Adapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +35,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PropertyDetail extends AppCompatActivity {
     TextView plotName, price;
@@ -44,7 +55,8 @@ public class PropertyDetail extends AppCompatActivity {
     ArrayList<String> imageUrl = new ArrayList<>();
 
     Toolbar toolbar;
-
+    FusedLocationProviderClient fusedLocationProviderClient;
+    Location mlocation;
     TextView location, key_detail, seller, textView;
     Typeface myfonts;
 
@@ -54,14 +66,15 @@ public class PropertyDetail extends AppCompatActivity {
         setContentView(R.layout.activity_property_detail);
 
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         toolbar = findViewById(R.id.toolbar6);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(false);
-        textView=findViewById(R.id.toolbar_title);
+        textView = findViewById(R.id.toolbar_title);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Typeface typeface= Typeface.createFromAsset(getAssets(),"fonts/Montserrat-Italic.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Italic.ttf");
         textView.setTypeface(typeface);
 
 
@@ -71,7 +84,7 @@ public class PropertyDetail extends AppCompatActivity {
 
         key_detail = findViewById(R.id.key_tv);
         key_detail.setTypeface(myfonts);
-
+        Getlastlocation();
 
         seller = findViewById(R.id.seller_tv);
         seller.setTypeface(myfonts);
@@ -83,7 +96,7 @@ public class PropertyDetail extends AppCompatActivity {
         Ui();
 
         imageUrl = getIntent().getExtras().getStringArrayList("imageUrl");
-        Log.e("array",String.valueOf(imageUrl));
+        Log.e("array", String.valueOf(imageUrl));
         key = getIntent().getExtras().getString("key");
         Log.e("key", key);
 
@@ -151,19 +164,17 @@ public class PropertyDetail extends AppCompatActivity {
                             tv_rooms.setVisibility(View.GONE);
                             roomsHeading.setVisibility(View.GONE);
                         }
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         Log.e("exception", e.getLocalizedMessage());
 
                     }
 
                 }
 
-                if (imageUrl!=null && imageUrl.size()>0){
+                if (imageUrl != null && imageUrl.size() > 0) {
                     adapter = new SlidingImage_Adapter(PropertyDetail.this, imageUrl);
                     mPager.setAdapter(adapter);
-                }
-                else {
+                } else {
                     mPager.setVisibility(View.GONE);
                 }
 
@@ -202,12 +213,30 @@ public class PropertyDetail extends AppCompatActivity {
         mapImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//
+//                Intent intent = new Intent(PropertyDetail.this, ViewMap.class);
+//                intent.putExtra("lat", lat);
+//                intent.putExtra("lng", lng);
+//                intent.putExtra("name", plot_name);
+//
+//                                startActivity(intent);
+//
+//
 
-                Intent intent = new Intent(PropertyDetail.this, ViewMap.class);
+                                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)",
+                        mlocation.getLatitude(), mlocation.getLongitude(), "Home Sweet Home", lat, lng, "Where the party is at");
+
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse(uri));
+    //    intent.setPackage("com.google.android.apps.maps");
                 Log.e("latlng", lat + " " + lng);
                 intent.putExtra("lat", lat);
                 intent.putExtra("lng", lng);
                 intent.putExtra("name", plot_name);
+
+                intent.setClassName("com.example.propertycostumer",
+                        "com.example.propertycostumer.ViewMap");
+
                 startActivity(intent);
 
             }
@@ -243,6 +272,34 @@ public class PropertyDetail extends AppCompatActivity {
         roomsHeading = findViewById(R.id.room_heading);
         storyHeading = findViewById(R.id.story_heading);
         sell_property = findViewById(R.id.sell_property);
+
+    }
+
+    private void Getlastlocation() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location!= null) {
+
+                    mlocation = location;
+
+
+
+                }
+
+            }
+        });
+
+
 
     }
 

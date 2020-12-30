@@ -1,9 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    android:id="@+id/rl2"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/main_layout"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/images"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="25dp"
+            />
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_below="@id/imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:text="Log In"/>
+
+        <EditText
+            android:id="@+id/emailAddress"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:layout_below="@id/tv1"
+            android:layout_alignStart="@+id/pass"
+            android:layout_alignLeft="@+id/pass"
+            android:layout_marginTop="10dp"
+            android:hint="@string/email"
+            android:textCursorDrawable="@drawable/underline_color"
+            android:backgroundTint="@color/colorAccent"
+            android:textColorHint="@color/grey"
+            android:inputType="text"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:textSize="16sp"
+            />
+
+
+
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/emailAddress"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:hint="password"
+            android:textCursorDrawable="@drawable/underline_color"
+            android:backgroundTint="@color/colorAccent"
+            android:textColorHint="@color/grey"
+            android:inputType="text"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:textSize="16sp"
+            />
+
+
+
+        <Button
+            android:id="@+id/loginbtn"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pass"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimaryDark"
+            android:clickable="true"
+            android:textAllCaps="false"
+            android:text="LOG IN"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/Signingup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textSize="18sp"
+            android:layout_below="@id/loginbtn"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="12dp"
+            android:textColor="@color/colorPrimaryDark">
+
+        </TextView>
+    </RelativeLayout>
+
+</RelativeLayout>
