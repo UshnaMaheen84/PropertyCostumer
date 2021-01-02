@@ -223,12 +223,12 @@ public class PropertyDetail extends AppCompatActivity {
 //
 //
 
-                                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)",
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)",
                         mlocation.getLatitude(), mlocation.getLongitude(), "Home Sweet Home", lat, lng, "Where the party is at");
 
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse(uri));
-    //    intent.setPackage("com.google.android.apps.maps");
+                //    intent.setPackage("com.google.android.apps.maps");
                 Log.e("latlng", lat + " " + lng);
                 intent.putExtra("lat", lat);
                 intent.putExtra("lng", lng);
@@ -288,17 +288,15 @@ public class PropertyDetail extends AppCompatActivity {
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location!= null) {
+                if (location != null) {
 
                     mlocation = location;
-
 
 
                 }
 
             }
         });
-
 
 
     }
